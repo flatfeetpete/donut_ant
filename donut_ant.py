@@ -102,11 +102,10 @@ class TorusGrid:
 # YOUR SECTION: Define the Ant's Logic Here
 # ---------------------------------------------------------
 
-last_move = 'E'
-
 def get_ant_decision(grid_width: int, grid_height: int, 
                      current_pos: Tuple[int, int], 
-                     visited_set: Set[Tuple[int, int]]) -> str:
+                     visited_set: Set[Tuple[int, int]],
+                     last_direction: Optional[str] = None) -> str:
     """
     Determines the next move for the ant.
     
@@ -115,16 +114,14 @@ def get_ant_decision(grid_width: int, grid_height: int,
         grid_height: Total height of grid.
         current_pos: Tuple (x, y) of current ant location.
         visited_set: Set of all (x, y) tuples already visited.
+        last_direction: The direction ('N', 'S', 'E', 'W') the ant moved last turn, or None if first turn.
         
     Returns:
         One of 'N', 'S', 'E', 'W'.
     """
-    global last_move
-    if last_move == 'E':
-        last_move = 'N'
+    if last_direction == 'E':
         return 'N'
     else:
-        last_move = 'E'
         return 'E'
     # --- EXAMPLE STRATEGY: Random Valid Move ---
     # This is a placeholder. You can replace this logic!
@@ -157,6 +154,7 @@ def run_simulation():
     WIDTH = 12
     HEIGHT = 10
     sim = TorusGrid(WIDTH, HEIGHT)
+    last_dir = None
     
     # 2. Loop
     while not sim.game_over:
@@ -168,11 +166,13 @@ def run_simulation():
             sim.width, 
             sim.height, 
             (sim.ant_x, sim.ant_y), 
-            sim.visited
+            sim.visited,
+            last_direction=last_dir
         )
         
         # Apply the move
         sim.move_ant(move_dir)
+        last_dir = move_dir
         
         # Slow down so we can see the animation
         time.sleep(0.2)
