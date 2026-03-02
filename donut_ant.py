@@ -127,28 +127,7 @@ def get_ant_decision(grid_width, grid_height,
         return 'N'
     else:
         return 'E'
-    # --- EXAMPLE STRATEGY: Random Valid Move ---
-    # This is a placeholder. You can replace this logic!
     
-    x, y = current_pos
-    possible_moves = [('N', 0, -1), ('S', 0, 1), ('E', 1, 0), ('W', -1, 0)]
-    valid_directions = []
-
-    for direction, dx, dy in possible_moves:
-        # Calculate theoretical next step with wrapping
-        nx = (x + dx) % grid_width
-        ny = (y + dy) % grid_height
-        
-        # Only add to list if we haven't been there
-        if (nx, ny) not in visited_set:
-            valid_directions.append(direction)
-
-    if valid_directions:
-        return random.choice(valid_directions)
-    else:
-        # No valid moves left (trapped!)
-        return 'N' # Will cause a crash in the simulation loop
-
 # ---------------------------------------------------------
 # Main Execution Loop
 # ---------------------------------------------------------
