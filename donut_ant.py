@@ -117,19 +117,7 @@ def get_ant_decision(grid_width, grid_height,
                      current_pos, 
                      visited_set,
                      previous_moves):
-    """
-    Determines the next move for the ant.
     
-    Args:
-        grid_width: Total width of grid.
-        grid_height: Total height of grid.
-        current_pos: Tuple (x, y) of current ant location.
-        visited_set: Set of all (x, y) tuples already visited.
-        last_direction: The direction ('N', 'S', 'E', 'W') the ant moved last turn, or None if first turn.
-        
-    Returns:
-        One of 'N', 'S', 'E', 'W'.
-    """
     if previous_moves == []:
         last_direction = None
     else:
@@ -146,7 +134,7 @@ def get_ant_decision(grid_width, grid_height,
 
 def run_simulation():
     # 1. Setup
-    WIDTH = 12
+    WIDTH = 11
     HEIGHT = 10
     sim = TorusGrid(WIDTH, HEIGHT)
     previous_moves = []
