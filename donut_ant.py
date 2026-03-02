@@ -1,7 +1,6 @@
 import time
 import os
 import random
-from typing import Tuple, Set, Optional
 
 # Define constants for visuals
 EMOJI_ANT = "🐜"
@@ -12,7 +11,7 @@ class TorusGrid:
     """
     A simulation environment representing a 2D grid on a torus (wraps around).
     """
-    def __init__(self, width: int, height: int):
+    def __init__(self, width, height):
         self.width = width
         self.height = height
         
@@ -22,17 +21,17 @@ class TorusGrid:
         
         # A set to store tuples of (x, y) coordinates the ant has visited.
         # We include the starting position immediately.
-        self.visited: Set[Tuple[int, int]] = {(self.ant_x, self.ant_y)}
+        self.visited = {(self.ant_x, self.ant_y)}
         
         self.game_over = False
         self.status_message = "Simulation Running"
 
     @property
-    def is_full(self) -> bool:
+    def is_full(self):
         """Returns True if every cell in the grid has been visited."""
         return len(self.visited) >= (self.width * self.height)
 
-    def move_ant(self, direction: str) -> bool:
+    def move_ant(self, direction):
         """
         Attempts to move the ant in a direction ('N', 'S', 'E', 'W').
         Returns True if move was successful, False if move was invalid (revisiting).
@@ -102,10 +101,10 @@ class TorusGrid:
 # YOUR SECTION: Define the Ant's Logic Here
 # ---------------------------------------------------------
 
-def get_ant_decision(grid_width: int, grid_height: int, 
-                     current_pos: Tuple[int, int], 
-                     visited_set: Set[Tuple[int, int]],
-                     last_direction: Optional[str] = None) -> str:
+def get_ant_decision(grid_width, grid_height, 
+                     current_pos, 
+                     visited_set,
+                     last_direction = None):
     """
     Determines the next move for the ant.
     
