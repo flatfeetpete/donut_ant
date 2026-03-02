@@ -4,8 +4,8 @@ import random
 
 # Define constants for visuals
 EMOJI_ANT = "🐜"
-EMOJI_VISITED = "🟩"  # Trail left behind
-EMOJI_EMPTY = "⬜"
+EMOJI_VISITED = "⬛"  # Trail left behind
+EMOJI_EMPTY = "🟨"
 
 class TorusGrid:
     """
@@ -47,8 +47,17 @@ class TorusGrid:
             dx = 1
             dy = -1
         elif direction == 'E': dx = 1
+        elif direction == 'SE':
+            dx = 1
+            dy = 1
         elif direction == 'S': dy = 1
+        elif direction == 'SW':
+            dx = -1
+            dy = 1
         elif direction == 'W': dx = -1
+        elif direction == 'SW':
+            dx = -1
+            dy = -1
         else:
             # If the user returns an invalid direction, we just skip the turn
             return True
@@ -126,10 +135,10 @@ def get_ant_decision(grid_width, grid_height,
     else:
         last_direction = previous_moves[-1]
 
-    if last_direction == 'E':
+    if last_direction == 'NE':
         return 'NE'
     else:
-        return 'E'
+        return 'NE'
     
 # ---------------------------------------------------------
 # Main Execution Loop
