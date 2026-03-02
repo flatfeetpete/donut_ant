@@ -43,8 +43,11 @@ class TorusGrid:
         
         # Map direction strings to coordinate changes
         if direction == 'N': dy = -1
-        elif direction == 'S': dy = 1
+        elif direction == 'NE': 
+            dx = 1
+            dy = -1
         elif direction == 'E': dx = 1
+        elif direction == 'S': dy = 1
         elif direction == 'W': dx = -1
         else:
             # If the user returns an invalid direction, we just skip the turn
@@ -124,7 +127,7 @@ def get_ant_decision(grid_width, grid_height,
         last_direction = previous_moves[-1]
 
     if last_direction == 'E':
-        return 'N'
+        return 'NE'
     else:
         return 'E'
     
