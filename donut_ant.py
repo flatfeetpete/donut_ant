@@ -104,7 +104,7 @@ class TorusGrid:
 def get_ant_decision(grid_width, grid_height, 
                      current_pos, 
                      visited_set,
-                     last_direction = None):
+                     previous_moves):
     """
     Determines the next move for the ant.
     
@@ -118,6 +118,11 @@ def get_ant_decision(grid_width, grid_height,
     Returns:
         One of 'N', 'S', 'E', 'W'.
     """
+    if previous_moves == []:
+        last_direction = None
+    else:
+        last_direction = previous_moves[-1]
+
     if last_direction == 'E':
         return 'N'
     else:
@@ -153,7 +158,7 @@ def run_simulation():
     WIDTH = 12
     HEIGHT = 10
     sim = TorusGrid(WIDTH, HEIGHT)
-    last_dir = None
+    previous_moves = []
     
     # 2. Loop
     while not sim.game_over:
@@ -166,12 +171,12 @@ def run_simulation():
             sim.height, 
             (sim.ant_x, sim.ant_y), 
             sim.visited,
-            last_direction=last_dir
+            previous_moves = previous_moves
         )
         
         # Apply the move
         sim.move_ant(move_dir)
-        last_dir = move_dir
+        previous_moves.append(move_dir)
         
         # Slow down so we can see the animation
         time.sleep(0.2)
