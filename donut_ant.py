@@ -110,7 +110,7 @@ class TorusGrid:
         print("-" * (self.width * 2 + 2))
 
 # ---------------------------------------------------------
-# YOUR SECTION: Define the Ant's Logic Here
+# Logique de la fourmi
 # ---------------------------------------------------------
 
 def get_ant_decision(grid_width, grid_height, 
@@ -123,13 +123,13 @@ def get_ant_decision(grid_width, grid_height,
     else:
         last_direction = previous_moves[-1]
 
-    if last_direction == 'NE':
-        return 'NE'
+    if last_direction == 'E':
+        return 'NE'  
     else:
-        return 'NE'
+        return 'E'
     
 # ---------------------------------------------------------
-# Main Execution Loop
+# Loop d'execution de la simulation
 # ---------------------------------------------------------
 
 def run_simulation():
@@ -143,8 +143,6 @@ def run_simulation():
     while not sim.game_over:
         sim.render()
         
-        # Get the user's decision
-        # We pass copies or raw data so the user has info to make a decision
         move_dir = get_ant_decision(
             sim.width, 
             sim.height, 
@@ -153,14 +151,14 @@ def run_simulation():
             previous_moves = previous_moves
         )
         
-        # Apply the move
+        # Applucation de la mouvement du fourmi
         sim.move_ant(move_dir)
         previous_moves.append(move_dir)
         
-        # Slow down so we can see the animation
+        # ralentit la fourmi pur qu'on peut voir la mouvement
         time.sleep(0.2)
 
-    # 3. Final State
+    # 3. Fin du simulation
     sim.render()
     print("Simulation Ended.")
 
