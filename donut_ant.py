@@ -3,7 +3,7 @@ import os
 import random
 
 # Define constants for visuals
-EMOJI_ANT = "🐜"
+EMOJI_FOURMI = "🐜"
 EMOJI_VISITED = "⬛"  # Trail left behind
 EMOJI_EMPTY = "🟨"
 
@@ -16,24 +16,24 @@ class TorusGrid:
         self.height = height
         
         # Start in the middle of the grid
-        self.ant_x = width // 2
-        self.ant_y = height // 2
+        self.fourmi_x = width // 2
+        self.fourmi_y = height // 2
         
-        # A set to store tuples of (x, y) coordinates the ant has visited.
-        # We include the starting position immediately.
-        self.visited = {(self.ant_x, self.ant_y)}
+        # Prend note dans un tuple des coordonnées (x, y) le fourmi a visité.
+        # on inclus la coordonnée ou se trouve la fourmi immédiatement.
+        self.visited = {(self.fourmi_x, self.fourmi_y)}
         
         self.game_over = False
-        self.status_message = "Simulation Running"
+        self.status_message = "Simulation courante"
 
     @property
     def is_full(self):
         """Returns True if every cell in the grid has been visited."""
         return len(self.visited) >= (self.width * self.height)
 
-    def move_ant(self, direction):
+    def bouger_fourmi(self, direction):
         """
-        Attempts to move the ant in a direction ('N', 'S', 'E', 'W').
+        Essaye de bouger la fourmi dans un direction ('N', 'S', 'E', 'W').
         Returns True if move was successful, False if move was invalid (revisiting).
         """
         if self.game_over:
@@ -66,8 +66,8 @@ class TorusGrid:
         # The % operator handles the Torus wrapping automatically.
         # e.g., if x is 9 and width is 10, (9+1)%10 = 0 (wraps to start)
         # e.g., if x is 0 and width is 10, (0-1)%10 = 9 (wraps to end)
-        new_x = (self.ant_x + dx) % self.width
-        new_y = (self.ant_y + dy) % self.height
+        new_x = (self.fourmi_x + dx) % self.width
+        new_y = (self.fourmi_y + dy) % self.height
 
         # Check constraints: Cannot revisit old cells
         if (new_x, new_y) in self.visited:
@@ -76,8 +76,8 @@ class TorusGrid:
             return False
 
         # Update state
-        self.ant_x = new_x
-        self.ant_y = new_y
+        self.fourmi_x = new_x
+        self.fourmi_y = new_y
         self.visited.add((new_x, new_y))
 
         # Check win condition
@@ -100,8 +100,8 @@ class TorusGrid:
         for y in range(self.height):
             row_str = ""
             for x in range(self.width):
-                if x == self.ant_x and y == self.ant_y:
-                    row_str += EMOJI_ANT
+                if x == self.fourmi_x and y == self.fourmi_y:
+                    row_str += EMOJI_FOURMI
                 elif (x, y) in self.visited:
                     row_str += EMOJI_VISITED
                 else:
@@ -113,7 +113,7 @@ class TorusGrid:
 # Logique de la fourmi
 # ---------------------------------------------------------
 
-def get_ant_decision(grid_width, grid_height, 
+def prendre_fourmi_decision(grid_width, grid_height, 
                      current_pos, 
                      visited_set,
                      previous_moves):
@@ -143,16 +143,16 @@ def run_simulation():
     while not sim.game_over:
         sim.render()
         
-        move_dir = get_ant_decision(
+        move_dir = prendre_fourmi_decision(
             sim.width, 
             sim.height, 
-            (sim.ant_x, sim.ant_y), 
+            (sim.fourmi_x, sim.fourmi_y), 
             sim.visited,
             previous_moves = previous_moves
         )
         
         # Applucation de la mouvement du fourmi
-        sim.move_ant(move_dir)
+        sim.bouger_fourmi(move_dir)
         previous_moves.append(move_dir)
         
         # ralentit la fourmi pur qu'on peut voir la mouvement
